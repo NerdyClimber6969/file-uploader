@@ -1,0 +1,15 @@
+<nav role="navigation" aria-label="path navigation">
+    <ul>
+        <li>
+            <a href="/folders">Storage</a>
+        </li>
+        <% if (locals.currentPath && locals.currentPath.length > 0) { %>
+            <% for (let i = 0; i < currentPath.length; i++) { %>
+            <% const segmentId = currentIdPath[i], segmentName = currentPath[i] %>   
+                <li>
+                    <span> ></span><a href="/folders/<%= segmentId %>"><%= segmentName %></a>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</nav>

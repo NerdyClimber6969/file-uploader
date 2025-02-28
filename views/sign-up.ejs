@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+    </head>
+
+    <body>
+        <section class="form-section">
+            <div class="form-container container">
+                <form action="/sign-up" method="POST">
+                    <label for="first-name">
+                        First name: <input type="text" id="first-name" name="firstName" pattern="[A-Za-z]+" required>
+                    </label>
+                    <label for="last-name">
+                        Last name: <input type="text" id="last-name" name="lastName" pattern="[A-Za-z]+" required>
+                    </label>
+                    <label for="username">
+                        Username: <input type="text" id="username" name="username" minlength="8" maxlength="15" pattern="[A-Za-z0-9]{8,15}">
+                    </label>
+                    <label for="password">
+                        Password: <input type="password" id="password" name="password" minlength="10" maxlength="20" pattern="[A-Za-z0-9]{10,20}">
+                    </label>
+                    <label for="confirm">
+                        Confirm your password: <input type="password" id="confirm" name="confirm">
+                    </label>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+            
+            <% if (locals.errors) { %>
+                <div class="error-msg-container container">
+                <ul>
+                    <% for (const error of errors) { %>
+                        <li class="error-msg"><%= error.message %></li>   
+                    <% } %>
+                </ul>
+                </div>                  
+            <% } %>
+        </section>
+    </body>
+</html>

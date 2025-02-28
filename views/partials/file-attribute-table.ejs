@@ -1,0 +1,34 @@
+<table>
+    <thead>
+        <tr>
+            <th>Atrribute</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Filename</th>
+            <td><%= file.name %></td>
+        </tr>
+        <tr>
+            <th>File size</th>
+            <td><%= file.size %></td>
+        </tr>
+        <tr>
+            <th>File type</th>
+            <td><%= file.mineType %></td>
+        </tr>
+        <tr>
+            <th>File address</th>
+            <td><%= `Storage/${currentPath.join("/")}` %></td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td><%= file.createdAt %></td>
+        </tr>
+        <tr>
+            <th>Updated At</th>
+            <td><%= file.updatedAt %></td>
+        </tr>
+    </tbody>
+</table>

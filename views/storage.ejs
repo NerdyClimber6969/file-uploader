@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/storage.css">
+        <script src="/js/storage.js" defer></script>
+        <title>Storage</title>
+    </head>
+    <body>
+        <header>
+            <nav role="navigation" aria-label="Main navigation">
+                <ul>
+                    <li><a href="/folders">Your Storage</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="storage" aria-label="Storage content">
+                <header>
+                    <h1>Your Storage</h1>
+                    <div class="button-container">
+                        <button class="open-btn" id="add-new-folder" aria-haspopup="dialog" aria-controls="new-folder-dialog">New Folder</button>
+                        <form action=<%= currentPath.length > 0 ? `${locals.actionUrl}/files` : '/files' %> method="POST" enctype="multipart/form-data">
+                            <input type="file" name="uploadfile" />
+                            <button type="submit">Upload</button>
+                        </form>                       
+                    </div>
+                    <%- include("partials/path-navigation-bar", { currentPath, currentIdPath }) %>
+                </header>
+
+                <section class="folders-section" aria-label="Folder content">
+                    <h2>Folders</h2>
+                    <% if (locals.childrenFolders && childrenFolders.length > 0) { %>
+                        <div class="grid-container" role="grid">
+                            <% childrenFolders.forEach((folder) => { %>   
+                                <div class="cell" role="cell"><%- include("partials/folder.ejs", { folder }) %></div>    
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </section>
+
+                <section class="file-section" aria-label="File content">
+                    <h2>Files</h2>
+                    <% if (locals.files && files.length > 0) { %>
+                        <div class="grid-container" role="grid">
+                            <% files.forEach((file) => { %>   
+                                <div class="cell" role="cell"><%- include("partials/file.ejs", { file }) %></div>    
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </section>
+            </section>
+        </main>
+
+        <%- include('partials/create-folder-dialog') %>
+    </body>
+</html>

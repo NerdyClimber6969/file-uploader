@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String    
+  expiresAt   DateTime
+}
+
+model User {
+  id String @id @default(uuid())
+  username String @db.VarChar(255) @unique
+  firstName String @db.VarChar(255) 
+  lastName String @db.VarChar(255)
+  hash String @db.VarChar(255)
+  folders Folder[] @relation("Owner")
+  files File[] 
+}
+
+model Folder {
+  id String @id @default(uuid())
+  name String @db.VarChar(255)
+  parentId String?
+  parent Folder? @relation("ParentChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children Folder[] @relation("ParentChildren")
+  ownerId String
+  owner User @relation(name: "Owner", fields: [ownerId], references: [id])
+  files File[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model File {
+  id String @id 
+  name String @db.VarChar(255)
+  size BigInt
+  mineType String @db.VarChar(255)
+  folderId String?
+  folder Folder? @relation(fields: [folderId], references: [id])
+  ownerId String
+  owner User @relation(fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

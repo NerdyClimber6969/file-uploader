@@ -1,0 +1,15 @@
+<dialog id="new-folder-dialog"  aria-labelledby="new-folder-dialog-title" aria-modal="true">
+    <h1 id="new-folder-dialog-title">Create New Folder</h1>
+    <div id="new-folder-dialog-content">
+        <form id="new-folder-form" method="POST" action="<%= locals.actionUrl %>">
+            <fieldset>
+                <label for="folderName">Folder Name: </label>
+                <input type="text" id="folderName" name="folderName" value="Utitle folder">
+            </fieldset>
+            <div>
+                <button class="close-btn" type="button" aria-label="close dialog">Cancel</button>
+                <button class="create-btn" type="submit" aria-label="create new folder">Create</button>
+            </div>
+        </form>
+    </div>
+</dialog>

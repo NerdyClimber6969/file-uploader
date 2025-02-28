@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const passport = require('../passport.js');
+const passport = require('../middlewares/passport.js');
 const { createUserPost } = require('../controllers/indexControllers.js');
 
 const indexRouter = Router();

@@ -1,18 +1,24 @@
-const StorageService = require('../services/StorageService.js');
+const FileService = require('../services/FileService.js');
+const FolderService = require('../services/FolderService.js');
 
-async function getFileDetailsGet(req, res) {
-    const { folderId } = req.params;
-    const { currentPath, currentIdPath } = await StorageService.getFolderPath(req.user, folderId);
-
+async function getFileDetails(req, res) {
+    const { currentPath, currentIdPath } = await FolderService.getPath(req.file.folderId, req.user.id);
     return res.render('file-details', { file: req.file, currentPath, currentIdPath });
 };
 
-async function downloadFileGet(req, res) {
+async function downloadFile(req, res) {
     const { id, mineType } = req.file;
     const ext = mineType.split('/')[1];
-    const filePath = await StorageService.getFileStoragePath(req.user, `${id}.${ext}`);
-    
+    const filePath = await FileService.getStoragePath(req.user.username, `${id}.${ext}`);
     return res.download(filePath);
 };
 
-module.exports = { getFileDetailsGet, downloadFileGet };
+async function uploadFile(req, res) {
+    const { user, file } = req;
+    const { folderId } =  req.params || null;
+    await FileService.createFile(file, user.id, folderId );
+    const redirectUrl = folderId ? `/folders/${folderId}` : '/folders';
+    return res.redirect(redirectUrl);
+};
+
+module.exports = { getFileDetails, downloadFile, uploadFile };

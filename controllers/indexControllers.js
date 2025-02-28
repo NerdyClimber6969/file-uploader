@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require("express-validator");
-const StorageService = require('../services/StorageService.js');
+const AuthService = require('../services/AuthService.js');
 
 const validateUserCreate = [
     body('firstName').trim()
@@ -30,7 +30,7 @@ const createUserPost = [
             return res.status(400).render("sign-up", { errors: errors.array() });
         };
 
-        const newUser = await StorageService.createUser(req.body);
+        const newUser = await AuthService.register(req.body);
 
         req.login(newUser, (err) => {
             if (err) {

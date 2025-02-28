@@ -1,16 +1,15 @@
 const { Router } = require('express');
-const { getFileDetailsGet, downloadFileGet } = require('../controllers/filesController.js');
+const { getFileDetails, downloadFile, uploadFile } = require('../controllers/filesController.js');
 const upload = require('../middlewares/upload.js');
-const { uploadFilePost } = require('../controllers/foldersController.js');
 const { isAuthenticated, checkFileAccess } = require('../middlewares/auth.js');
 
 const filesRouter = Router();
 
 filesRouter.use(isAuthenticated);
 
-filesRouter.get('/:fileId/details', checkFileAccess, getFileDetailsGet);
-filesRouter.get('/:fileId', checkFileAccess, downloadFileGet);
+filesRouter.get('/:fileId/details', checkFileAccess, getFileDetails);
+filesRouter.get('/:fileId', checkFileAccess, downloadFile);
 
-filesRouter.post('/', upload.single('uploadfile'), uploadFilePost);
+filesRouter.post('/', upload.single('uploadfile'), uploadFile);
 
 module.exports = filesRouter;
